@@ -78,10 +78,16 @@ export class LoginPageLocators {
   readonly passwordInput = '#password';
   readonly submitButton = 'button[type="submit"]';
 }
+
+// Export singleton instance
+export const loginPageLocators = new LoginPageLocators();
 ```
 
 #### Actions Layer
 ```typescript
+import { Page } from '@playwright/test';
+import { loginPageLocators } from '../locators/login.locators';
+
 // Page-specific actions
 export class LoginPageActions {
   constructor(private page: Page) {}
@@ -111,6 +117,9 @@ export class CustomWorld extends World {
 ### 3. Hooks Pattern
 
 ```typescript
+import { Before, After, Status } from '@cucumber/cucumber';
+import { CustomWorld } from './world';
+
 Before(async function (this: CustomWorld, { pickle }) {
   await this.init(); // Setup before each scenario
 });
@@ -122,6 +131,8 @@ After(async function (this: CustomWorld, { result }) {
   await this.close(); // Cleanup
 });
 ```
+
+**Note:** The examples above use hypothetical login page classes. See `src/locators/example.locators.ts` and `src/actions/example.actions.ts` for actual implementation.
 
 ## Best Practices Implemented
 
